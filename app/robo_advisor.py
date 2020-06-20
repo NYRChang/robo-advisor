@@ -53,23 +53,17 @@ with open(csv_file_path, "w", newline='') as csv_file: # "w" means "open the fil
     writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
     writer.writeheader() # uses fieldnames set above
     
-    #looping
-    writer.writerow({
-        "timestamp": "To-do",
-        "open": "To-do",
-        "high": "To-do",
-        "low": "To-do",
-        "close": "To-do",
-        "volume": "To-do"
-        })
-    writer.writerow({
-        "timestamp": "To-do",
-        "open": "To-do",
-        "high": "To-do",
-        "low": "To-do",
-        "close": "To-do",
-        "volume": "To-do"
-        })
+    for date in dates: 
+        daily_prices = tsd[date]
+        writer.writerow({
+            "timestamp": date,
+            "open": daily_prices["1. open"],
+            "high": daily_prices["2. high"],
+            "low": daily_prices["3. low"],
+            "close": daily_prices["4. close"],
+            "volume": daily_prices["5. volume"]
+            })
+
     
 
 
