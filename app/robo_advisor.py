@@ -4,9 +4,16 @@ import json
 import csv
 import os
 
+from dotenv import load_dotenv
 import requests
 
-request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo"
+load_dotenv()
+
+api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
+
+symbol = input("Please input stock ticker: ")
+request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={api_key}"
+
 response = requests.get(request_url)
 #print(type(response))    #<class 'requests.models.Response'>
 #print(response.status_code)         #200
