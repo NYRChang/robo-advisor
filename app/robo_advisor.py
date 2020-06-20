@@ -9,12 +9,27 @@ response = requests.get(request_url)
 #print(response.status_code)         #200
 #print(response.text)        #STRING
 
+def to_usd(my_price):
+    """
+    Converts a numeric value to usd-formatted string, for printing and display purposes.
+
+    Param: my_price (int or float) like 4000.444444
+
+    Example: to_usd(4000.444444)
+
+    Returns: $4,000.44
+    """
+    return f"${my_price:,.2f}" #> $12,000.71
+
 parsed_response = json.loads(response.text)
+tsd = parsed_response["Time Series (Daily)"]
+
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
-print(last_refreshed)
 
+dates = list(tsd.keys())    #TODO: assumes first day is on top but consider sorting to ensure 1st day is on top
+latest_day = dates[0]
+latest_close = tsd[latest_day]["4. close"]
 
-print(type(parsed_response))
 
 
 
@@ -22,10 +37,10 @@ print("-------------------------")
 print("SELECTED SYMBOL: XYZ")
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
-print(f"REQUEST AT: {last_refreshed}")
+print("REQUEST AT: 2018-02-20 02:00pm")
 print("-------------------------")
-print("LATEST DAY: 2018-02-20")
-print("LATEST CLOSE: $100,000.00")
+print(f"LATEST DAY: {last_refreshed}")
+print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print("RECENT HIGH: $101,000.00")
 print("RECENT LOW: $99,000.00")
 print("-------------------------")
